@@ -54,7 +54,7 @@
     <p style="margin-top:12px;"><strong>端末から自動的に収集する情報</strong></p>
     <ul>
       <li><strong>位置情報</strong>：ログを投稿する際に、ユーザーの許可を得た上で現在地を取得します。位置情報はログの座標として保存されます</li>
-      <li><strong>クラッシュ情報・エラー情報</strong>：アプリが予期せず終了した場合やエラーが発生した場合に、原因調査と品質改善のため、エラーの内容・発生箇所・端末の OS バージョン・アプリのバージョンを収集します。この情報は Sentry（Functional Software, Inc.）のサービスを通じて処理されます。<strong>メールアドレス・IP アドレス・表示名は送信されません。</strong></li>
+      <li><strong>クラッシュ情報・エラー情報</strong>：アプリが予期せず終了した場合やエラーが発生した場合に、原因調査と品質改善のため、エラーの内容・発生箇所・端末の OS バージョン・アプリのバージョンを収集します。この情報は Sentry（Functional Software, Inc.）のサービスを通じて処理されます。<strong>ユーザーを識別できる情報（メールアドレス・IP アドレス・表示名・ユーザー ID）は一切送信しません。</strong></li>
     </ul>
 
     <h2>2. 情報の利用目的</h2>
@@ -88,7 +88,7 @@
       <li><strong>Amazon Web Services, Inc.</strong>：サーバー・ストレージの提供のため、本アプリが扱う情報全般を預けています</li>
       <li><strong>Resend, Inc.</strong>：メールアドレスの確認・パスワード再設定・お知らせの送信のため、メールアドレスを渡しています</li>
       <li><strong>OpenStreetMap の Overpass API 提供者</strong>：近くの店舗・施設の名称を検索するため、<strong>ログを投稿しようとしている地点の座標のみ</strong>を送信します</li>
-      <li><strong>Functional Software, Inc.（Sentry）</strong>：不具合の検知と修正のため、クラッシュ情報とエラー情報を送信します。メールアドレス・IP アドレス・表示名は送信していません</li>
+      <li><strong>Functional Software, Inc.（Sentry）</strong>：不具合の検知と修正のため、クラッシュ情報とエラー情報を送信します。<strong>ユーザーを識別できる情報は一切送信していません</strong></li>
       <li><strong>法令に基づく開示</strong>：法律・規制・司法手続きにより開示が必要な場合</li>
     </ul>
     <p style="margin-top:12px;"><strong>Overpass API への座標送信について</strong></p>
