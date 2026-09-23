@@ -1,0 +1,12 @@
+# Cloudflare Pages のルーティング。
+#
+# ⚠️ **これが無いと招待リンクが 404 になる。**
+#    /invite/<userId> は実ファイルではないため、そのままだと見つからない。
+#    200 で index.html を返し、ページ側が URL から ID を読む（rewrite）。
+#
+#    301/302 にしないこと。リダイレクトすると URL が変わり、
+#    ページ側が ID を取り出せなくなる。
+/invite/*   /invite/index.html   200
+
+# 旧 pinlog://users/<id> と同じ形も受ける（AASA の components に合わせる）
+/users/*    /invite/index.html   200

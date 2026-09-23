@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["632FCXMN2F.com.hirotaka.pinlog"],
+        "components": [
+          { "/": "/invite/*", "comment": "招待リンク。アプリがあれば開く" },
+          { "/": "/users/*",  "comment": "旧 pinlog://users/<id> と同じ形" }
+        ]
+      }
+    ]
+  }
+}

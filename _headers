@@ -1,0 +1,8 @@
+# Cloudflare Pages のヘッダ設定。
+#
+# ⚠️ **これが無いと Universal Links は動かない。**
+#    AASA は拡張子を持たないため、既定では application/octet-stream で返る。
+#    Apple はその場合**黙って無視する**。エラーも出ないので気づけない。
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600

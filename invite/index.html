@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PINLOG に招待されました</title>
+<meta name="description" content="友だちだけの地図に招待されました。PINLOG で一緒に地図を作りましょう。">
+
+<!--
+  招待リンクの受け皿。
+
+  ⚠️ **このページが出る＝アプリが入っていない、とは限らない。**
+     Universal Links は、アプリがあればここを開かずに直接アプリへ飛ぶ。
+     ただし「リンクを長押し→開く」や、一度 Safari で開いた後などは
+     ここに落ちることがある。そのため**アプリを開く導線も残す**。
+
+  ⚠️ **自動で App Store へ飛ばさない。** アプリを持っている人が
+     たまたまここに来たとき、勝手にストアへ送られると戻れなくなる。
+     押してもらう。
+-->
+
+<meta property="og:title" content="PINLOG に招待されました">
+<meta property="og:description" content="友だちだけの地図に招待されました。一緒に地図を作りましょう。">
+<meta property="og:type" content="website">
+
+<style>
+  :root {
+    --bg: #FAF8F4; --surface: #FFFFFF; --text: #2C2825; --muted: #7A7068;
+    --accent: #4ECDC4; --on-accent: #1F3A38; --border: #E5E0D9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 24px;
+  }
+  .card {
+    background: var(--surface); border-radius: 20px; padding: 40px 28px;
+    max-width: 420px; width: 100%; text-align: center;
+    box-shadow: 0 8px 28px rgba(0,0,0,.08);
+  }
+  h1 { font-size: 22px; margin: 0 0 8px; color: var(--text); }
+  .lead { font-size: 14px; color: var(--muted); margin: 0 0 28px; }
+  .btn {
+    display: block; width: 100%; padding: 15px 20px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    /* ⚠️ accent の上に白を置かない。コントラスト 1.93 で WCAG AA を満たさない */
+    background: var(--accent); color: var(--on-accent);
+    margin-bottom: 12px;
+  }
+  .btn.sub {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); font-weight: 400;
+  }
+  .note { font-size: 12px; color: var(--muted); margin-top: 20px; }
+  .note a { color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>友だちの地図に招待されました</h1>
+    <p class="lead">
+      PINLOG は、招待した人だけで作る地図です。<br>
+      行ってよかった場所を、お互いにためていきます。
+    </p>
+
+    <a class="btn" id="store" href="https://apps.apple.com/app/id6801804300">
+      App Store でアプリを入れる
+    </a>
+    <a class="btn sub" id="open" href="#">アプリで開く</a>
+
+    <p class="note">
+      入れたあと、この招待リンクをもう一度押すとつながります。<br>
+      <a href="/privacy.html">プライバシーポリシー</a> ・
+      <a href="/terms.html">利用規約</a>
+    </p>
+  </div>
+
+<script>
+  // 「アプリで開く」はカスタムスキームへ。
+  // Universal Links が効かない状況（長押しで開いた等）の逃げ道。
+  //
+  // ⚠️ パスから ID を取り出すだけで、検証はしない。
+  //    ここは入口の案内であって、認可はアプリと API が行う。
+  var parts = location.pathname.split('/').filter(Boolean);
+  var id = parts[parts.length - 1];
+  var open = document.getElementById('open');
+  if (id && id !== 'invite') {
+    open.href = 'pinlog://users/' + encodeURIComponent(id) + '?invite=true';
+  } else {
+    open.style.display = 'none';
+  }
+</script>
+</body>
+</html>
