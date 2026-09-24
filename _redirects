@@ -1,12 +1,18 @@
 # Cloudflare Pages のルーティング。
 #
-# ⚠️ **これが無いと招待リンクが 404 になる。**
-#    /invite/<userId> は実ファイルではないため、そのままだと見つからない。
-#    200 で index.html を返し、ページ側が URL から ID を読む（rewrite）。
+# /invite/<userId> は実ファイルではないため、そのままだと見つからない。
+# 200 で招待ページを返し、ページ側が URL から ID を読む（rewrite）。
+#
+# ⚠️ **書き換え先は `/invite/` と書く。`/invite/index.html` では効かない。**
+#    Pages は `/invite/index.html` を `/invite/` へ 308 で転送するため、
+#    書き換え先には転送後の形を書く。`/invite/index.html` と書いていた間は、
+#    `/invite/<id>` で**トップページ（サポート）が 200 で返っていた**（2026-09-24 実測）。
+#    `404.html` が無いと Pages はどのパスにもトップページを返すので、
+#    **ステータスコードでは壊れていることに気づけない**（→ README「確認する」）。
 #
 #    301/302 にしないこと。リダイレクトすると URL が変わり、
 #    ページ側が ID を取り出せなくなる。
-/invite/*   /invite/index.html   200
+/invite/*   /invite/   200
 
 # 旧 pinlog://users/<id> と同じ形も受ける（AASA の components に合わせる）
-/users/*    /invite/index.html   200
+/users/*    /invite/   200
