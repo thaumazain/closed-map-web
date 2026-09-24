@@ -21,7 +21,7 @@ PINLOG の公開ページ。サポート・利用規約・プライバシーポ�
 | `.well-known/apple-app-site-association` | Universal Links の宣言 |
 | `invite/index.html` | 招待の受け皿。App Store へ誘導する |
 | `_headers` | **AASA を `application/json` で返す**（無いと動かない） |
-| `_redirects` | **`/invite/<id>` を index.html に割り当てる**（無いと 404） |
+| `_redirects` | **`/invite/<id>` を招待ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
 | `index.html` / `privacy.html` / `terms.html` | 既存のサポートページ |
 
 ---
@@ -83,12 +83,16 @@ curl -s https://pinlogapp.com/.well-known/apple-app-site-association
 # {"applinks":{"details":[{"appIDs":["632FCXMN2F.com.hirotaka.pinlog"], ...
 ```
 
-**招待ページが出るか**:
+**招待ページが出るか**（**ページのタイトルで**判定する）:
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" https://pinlogapp.com/invite/test123
-# 200（404 なら _redirects が効いていない）
+curl -s https://pinlogapp.com/invite/test123 | grep -o '<title>[^<]*'
+# <title>PINLOG に招待されました     ← 「PINLOG — サポート」なら _redirects が効いていない
 ```
+
+> ⚠️ **ステータスコードでは判定できない。** `404.html` が無いので、Pages はどのパスにも
+> 200 でトップページ（サポート）を返す。`_redirects` が効いていなくても 200 になり、
+> 実際にこれで壊れたまま気づかなかった（→ thaumazain/closed_map#250）。
 
 **Apple 側のキャッシュに載ったか**（反映に数時間かかる）:
 
@@ -98,8 +102,12 @@ curl -s "https://app-site-association.cdn-apple.com/a/v1/pinlogapp.com" | head -
 
 ## 4. アプリ側
 
-`app.json` の `associatedDomains` は PR で入れてある。**ネイティブ設定なので
-OTA では入らない。次のビルドから効く。**
+Universal Links を有効にするのは、アプリ側の **`mobile/ios/PINLOG/PINLOG.entitlements`** にある
+`com.apple.developer.associated-domains`（`applinks:pinlogapp.com`）。
+
+`app.json` の `associatedDomains` に書くだけでは**ビルドに入らない**。アプリは `ios/` を
+コミットしているので prebuild が走らず、ビルドが読むのは entitlements のほう
+（→ thaumazain/closed_map#250）。**ネイティブ設定なので OTA でも入らない。次のビルドから効く。**
 
 実機での確認:
 
@@ -114,8 +122,8 @@ OTA では入らない。次のビルドから効く。**
 
 | 症状 | 原因 |
 |---|---|
-| アプリが開かず Safari でページが出る | AASA の `Content-Type` が違う／Apple のキャッシュがまだ古い |
-| `/invite/<id>` が 404 | `_redirects` が無い、または output directory が `web` になっていない |
+| アプリが開かず Safari でページが出る | AASA の `Content-Type` が違う／Apple のキャッシュがまだ古い／アプリの entitlements に `applinks:pinlogapp.com` が無い（`app.json` だけでは入らない） |
+| `/invite/<id>` でサポートページ（トップ）が出る | `_redirects` が効いていない。書き換え先を `/invite/index.html` と書くと効かないので `/invite/` にする。`_redirects` が無くても同じ見え方になる |
 | 一度成功したのに効かなくなった | AASA を変えた。端末のキャッシュは**アプリの再インストール**で消える |
 | `api.pinlogapp.com` が落ちた | apex と別レコード。落ちるはずは無いので、DNS を見直す |
 
