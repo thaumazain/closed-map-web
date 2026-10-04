@@ -87,8 +87,11 @@
   var parts = location.pathname.split('/').filter(Boolean);
   var id = parts[parts.length - 1];
   var open = document.getElementById('open');
+  // 招待リンクの署名 t はそのまま渡す（closed_map #444）。落とすと、アプリで開いても友達申請になる
+  var t = new URLSearchParams(location.search).get('t');
   if (id && id !== 'invite') {
-    open.href = 'pinlog://users/' + encodeURIComponent(id) + '?invite=true';
+    open.href = 'pinlog://users/' + encodeURIComponent(id) + '?invite=true'
+      + (t ? '&t=' + encodeURIComponent(t) : '');
   } else {
     open.style.display = 'none';
   }
