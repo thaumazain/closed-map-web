@@ -19,10 +19,14 @@ PINLOG の公開ページ。サポート・利用規約・プライバシーポ�
 | ファイル | 役割 |
 |---|---|
 | `.well-known/apple-app-site-association` | Universal Links の宣言 |
-| `invite/index.html` | 招待の受け皿。App Store へ誘導する |
+| `invite/index.html` | 招待の受け皿。上「友達のマップを見る」でアプリの招待画面を開き、下「アプリを入れてない方はこちら」で App Store へ送る |
 | `_headers` | **AASA を `application/json` で返す**（無いと動かない） |
 | `_redirects` | **`/invite/<id>` を招待ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
 | `index.html` / `privacy.html` / `terms.html` | 既存のサポートページ |
+| `tests/` | 招待ページのボタンの並びと行き先のテスト。`node --test tests/*.test.mjs`（パッケージは要らない） |
+
+> ⚠️ 招待ページを**1つのボタンで「アプリがあれば開く・無ければ App Store」にはできない。**
+> Web ページからはアプリが入っているかを確かめられない（理由は `invite/index.html` 冒頭）。
 
 ---
 
