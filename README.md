@@ -1,6 +1,6 @@
 # closed-map-web
 
-PINLOG の公開ページ。サポート・利用規約・プライバシーポリシーと、
+PINLOG の公開ページ。アプリへ送るトップ（紹介ページ）・サポート・利用規約・プライバシーポリシーと、
 招待リンクの受け皿、Universal Links のための AASA を置く。
 
 ⚠️ **アプリ本体（`thaumazain/closed_map`）とは別のリポジトリ。**
@@ -22,7 +22,10 @@ PINLOG の公開ページ。サポート・利用規約・プライバシーポ�
 | `invite/index.html` | 招待の受け皿。App Store へ誘導する |
 | `_headers` | **AASA を `application/json` で返す**（無いと動かない） |
 | `_redirects` | **`/invite/<id>` を招待ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
-| `index.html` / `privacy.html` / `terms.html` | 既存のサポートページ |
+| `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ4枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る |
+| `support.html` | サポート（よくある質問・お問い合わせ）。**App Store Connect のサポート URL はここ** |
+| `privacy.html` / `terms.html` | プライバシーポリシー・利用規約 |
+| `img/` | トップの画像。`screen-*.webp` は App Store に出しているスクショ（600×1300）、`qr-app-store.svg` は `https://apps.apple.com/app/id6801804300` の QR、`icon-192.png` はアプリのアイコン |
 
 ---
 
@@ -87,11 +90,11 @@ curl -s https://pinlogapp.com/.well-known/apple-app-site-association
 
 ```bash
 curl -s https://pinlogapp.com/invite/test123 | grep -o '<title>[^<]*'
-# <title>PINLOG に招待されました     ← 「PINLOG — サポート」なら _redirects が効いていない
+# <title>PINLOG に招待されました     ← トップ（「PINLOG — 友だちの…」）が出たら _redirects が効いていない
 ```
 
 > ⚠️ **ステータスコードでは判定できない。** `404.html` が無いので、Pages はどのパスにも
-> 200 でトップページ（サポート）を返す。`_redirects` が効いていなくても 200 になり、
+> 200 でトップページを返す。`_redirects` が効いていなくても 200 になり、
 > 実際にこれで壊れたまま気づかなかった（→ thaumazain/closed_map#250）。
 
 **Apple 側のキャッシュに載ったか**（反映に数時間かかる）:
@@ -123,7 +126,7 @@ Universal Links を有効にするのは、アプリ側の **`mobile/ios/PINLOG/
 | 症状 | 原因 |
 |---|---|
 | アプリが開かず Safari でページが出る | AASA の `Content-Type` が違う／Apple のキャッシュがまだ古い／アプリの entitlements に `applinks:pinlogapp.com` が無い（`app.json` だけでは入らない） |
-| `/invite/<id>` でサポートページ（トップ）が出る | `_redirects` が効いていない。書き換え先を `/invite/index.html` と書くと効かないので `/invite/` にする。`_redirects` が無くても同じ見え方になる |
+| `/invite/<id>` でトップページ（紹介ページ）が出る | `_redirects` が効いていない。書き換え先を `/invite/index.html` と書くと効かないので `/invite/` にする。`_redirects` が無くても同じ見え方になる |
 | 一度成功したのに効かなくなった | AASA を変えた。端末のキャッシュは**アプリの再インストール**で消える |
 | `api.pinlogapp.com` が落ちた | apex と別レコード。落ちるはずは無いので、DNS を見直す |
 
@@ -132,15 +135,18 @@ Universal Links を有効にするのは、アプリ側の **`mobile/ios/PINLOG/
 いまは GitHub Pages を登録している。
 
 ```
-サポート          https://thaumazain.github.io/closed-map-web/
+サポート          https://thaumazain.github.io/closed-map-web/   ← ⚠️ support.html に差し替える（#507。差し替えたらここも直す）
 プライバシー      https://thaumazain.github.io/closed-map-web/privacy.html
 利用規約          https://thaumazain.github.io/closed-map-web/terms.html
 ```
 
+⚠️ **サポートはトップ（`/`）から `support.html` に移した**（#507）。App Store Connect のサポート URL が
+トップのままだと、紹介ページが開く（お問い合わせはフッターの「サポート」から行けるが、審査で迷わせないよう差し替える）。
+
 Cloudflare Pages に載せ替えたら、**App Store Connect の URL も差し替える**こと。
 
 ```
-https://pinlogapp.com/
+https://pinlogapp.com/support.html
 https://pinlogapp.com/privacy.html
 https://pinlogapp.com/terms.html
 ```

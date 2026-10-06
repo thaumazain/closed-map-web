@@ -1,188 +1,138 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PINLOG — サポート</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PINLOG — 友だちの「行ってよかった」が、地図にたまっていく</title>
+<meta name="description" content="PINLOG は、知り合いだけのクローズドなマップ。友だちの「行ってよかった」が地図にたまっていきます。">
 
-    :root {
-      --teal: #4ECDC4;
-      --teal-dark: #3ab5ac;
-      --text: #2c2c2c;
-      --muted: #666;
-      --bg: #f9f9f9;
-      --card: #ffffff;
-      --border: #e5e5e5;
-      --radius: 12px;
-    }
+<!--
+  pinlogapp.com のトップ。アプリへ送る紹介ページ（thaumazain/closed_map#507）。
+  サポート（よくある質問・お問い合わせ）は support.html にある。
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
+  - Safari では Smart App Banner が出る（アプリが入っていれば「開く」、無ければ「入手」）。
+    アプリへ飛ぶ導線はこれと App Store のバッジ
+  - PC では App Store の QR コードを出す（スマホではバッジだけ）。
+    QR は img/qr-app-store.svg（中身は https://apps.apple.com/app/id6801804300）
+  - スクショは App Store に出しているもの（img/screen-*.webp。600×1300）。差し替えたらここも差し替える
+  - App Store のバッジは Apple の配信元の画像をそのまま使う（Apple の埋め込みコードと同じ。手で作り直さない）
+-->
 
-    header {
-      background: var(--teal);
-      color: white;
-      text-align: center;
-      padding: 48px 24px 40px;
-    }
+<meta name="apple-itunes-app" content="app-id=6801804300">
+<meta property="og:title" content="PINLOG — 友だちの「行ってよかった」が、地図にたまっていく">
+<meta property="og:description" content="知り合いだけのクローズドなマップ。友だちのおすすめが、自然と集まってくる。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pinlogapp.com/">
+<meta property="og:image" content="https://pinlogapp.com/img/icon-192.png">
+<link rel="icon" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
 
-    header .icon {
-      width: 80px;
-      height: 80px;
-      background: white;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      font-size: 40px;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- アプリと同じ書体（本文 Noto Sans JP・ロゴ Pacifico → closed_map の mobile/constants/fonts.ts） -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
 
-    header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.02em; }
-    header p  { margin-top: 8px; opacity: 0.9; font-size: 0.95rem; }
+<style>
+  /* 色はアプリと同じ（closed_map の mobile/constants/theme.ts） */
+  :root {
+    --bg: #FAF8F4; --surface: #FFFFFF; --text: #2C2825; --muted: #7A7068;
+    --accent: #4ECDC4; --border: #E5E0D9;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh; display: flex; flex-direction: column;
+  }
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 48px 0 24px; }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px 24px;
-      background: white;
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { width: 52px; height: 52px; border-radius: 12px; }
+  .brand span { font-family: 'Pacifico', cursive; font-size: 32px; color: var(--accent); line-height: 1; }
 
-    nav a {
-      color: var(--teal-dark);
-      text-decoration: none;
-      font-size: 0.9rem;
-      padding: 4px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--teal);
-      transition: background 0.15s;
-    }
+  h1 {
+    margin: 28px 16px 0; text-align: center;
+    font-size: clamp(22px, 6vw, 34px); font-weight: 700; line-height: 1.5; letter-spacing: .02em;
+  }
+  h1 .nowrap { white-space: nowrap; }
+  .lead { margin: 12px 16px 0; text-align: center; color: var(--muted); font-size: 15px; }
 
-    nav a:hover { background: var(--teal); color: white; }
+  /* スクショ: スマホでは横に送る。PC では4枚を並べる */
+  .shots {
+    width: 100%; margin-top: 28px; padding: 4px 16px 12px;
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .shots::-webkit-scrollbar { display: none; }
+  .shots img {
+    flex: 0 0 auto; width: min(62vw, 240px); aspect-ratio: 600 / 1300; height: auto;
+    border-radius: 18px; scroll-snap-align: center;
+    box-shadow: 0 10px 28px rgba(44, 40, 37, .14);
+    background: var(--surface);
+  }
+  .hint { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
 
-    main {
-      max-width: 640px;
-      margin: 40px auto;
-      padding: 0 20px 60px;
-    }
+  .get { margin-top: 24px; display: flex; align-items: center; gap: 24px; }
+  .badge img { display: block; height: 54px; width: auto; }
+  .qr { display: none; text-align: center; }
+  .qr img { display: block; width: 112px; height: 112px; border-radius: 10px; border: 1px solid var(--border); }
+  .qr p { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      margin-bottom: 24px;
-    }
+  footer { padding: 24px 16px calc(24px + env(safe-area-inset-bottom)); text-align: center; font-size: 13px; color: var(--muted); }
+  footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; }
+  footer a { color: var(--muted); }
+  footer p { margin: 10px 0 0; font-size: 12px; }
 
-    .card h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--teal-dark);
-    }
-
-    .faq-item { margin-bottom: 20px; }
-    .faq-item h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
-    .faq-item p  { font-size: 0.9rem; color: var(--muted); }
-
-    .contact-body { font-size: 0.93rem; color: var(--muted); margin-bottom: 20px; }
-
-    .btn {
-      display: inline-block;
-      background: var(--teal);
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      padding: 13px 28px;
-      font-size: 1rem;
-      font-weight: 700;
-      transition: background 0.15s;
-    }
-
-    .btn:hover { background: var(--teal-dark); }
-
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--muted);
-      padding: 24px;
-      border-top: 1px solid var(--border);
-    }
-
-    footer a { color: var(--teal-dark); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-  </style>
+  @media (min-width: 900px) {
+    main { padding-top: 72px; }
+    .shots { justify-content: center; overflow-x: visible; }
+    .shots img { width: 210px; }
+    .hint { display: none; }
+    .qr { display: block; }
+  }
+</style>
 </head>
 <body>
-
-<header>
-  <div class="icon">📍</div>
-  <h1>PINLOG</h1>
-  <p>招待制のプライベートマップ共有アプリ</p>
-</header>
-
-<nav>
-  <a href="#faq">よくある質問</a>
-  <a href="#contact">お問い合わせ</a>
-  <a href="privacy.html">プライバシーポリシー</a>
-  <a href="terms.html">利用規約</a>
-</nav>
-
 <main>
+  <div class="brand">
+    <img src="img/icon-192.png" alt="" width="52" height="52">
+    <span>PINLOG</span>
+  </div>
 
-  <!-- FAQ -->
-  <div class="card" id="faq">
-    <h2>よくある質問</h2>
+  <!-- 文節ごとに折り返す（狭い画面で「が、」だけが1行に残らないように） -->
+  <h1><span class="nowrap">友だちの</span><span class="nowrap">「行ってよかった」が、</span><br><span class="nowrap">地図にたまっていく</span></h1>
+  <p class="lead">知り合いだけのクローズドなマップ</p>
 
-    <div class="faq-item">
-      <h3>招待なしでも参加できますか？</h3>
-      <p>いいえ。PINLOG は完全招待制です。参加するには、既存のメンバーから招待リンクを受け取る必要があります。</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>投稿した写真は誰に見えますか？</h3>
-      <p>招待リンクでつながったフォロワーにのみ表示されます。公開マップは存在しません。</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>アカウントを削除するには？</h3>
-      <p>アプリ内の「設定 → アカウント → アカウントを削除」から申請できます。申請後30日間はデータが保持され、30日後にすべて完全に削除されます。</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>招待リンクが開きません</h3>
-      <p>アプリがインストールされていることをご確認ください。インストール後にリンクを再度タップすると正しく動作します。</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>写真のアップロードに失敗します</h3>
-      <p>ネットワーク接続を確認してから再度お試しください。解決しない場合は下記フォームからご連絡ください。</p>
+  <div class="get">
+    <a class="badge" href="https://apps.apple.com/app/id6801804300">
+      <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp" alt="App Store からダウンロード">
+    </a>
+    <div class="qr">
+      <img src="img/qr-app-store.svg" alt="App Store の PINLOG のページを開く QR コード">
+      <p>iPhone のカメラで読み取る</p>
     </div>
   </div>
 
-  <!-- Contact -->
-  <div class="card" id="contact">
-    <h2>お問い合わせ</h2>
-    <p class="contact-body">下記ボタンからお問い合わせフォームを開いてください。通常2〜3営業日以内にご返信いたします。</p>
-    <!-- Google Forms の URL を YOUR_GOOGLE_FORM_URL に置き換える -->
-    <a class="btn" href="https://forms.gle/bLpe64pdCWqTbFjc6" target="_blank" rel="noopener">お問い合わせフォームを開く</a>
+  <div class="shots" aria-label="アプリの画面">
+    <img src="img/screen-1-map.webp" width="600" height="1300" alt="友達の“リピ確”が地図になる。招待した友達だけのクローズドな地図">
+    <img src="img/screen-2-kuchikomi.webp" width="600" height="1300" alt="“知らない口コミ”より“あの人の口コミ”" loading="lazy">
+    <img src="img/screen-3-shumi.webp" width="600" height="1300" alt="趣味嗜好が近い人がわかる" loading="lazy">
+    <img src="img/screen-4-mapapp.webp" width="600" height="1300" alt="お馴染みの地図アプリで開ける" loading="lazy">
   </div>
+  <p class="hint">← 横にスワイプ →</p>
 
 </main>
 
 <footer>
-  <p>© 2026 PINLOG &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="terms.html">利用規約</a></p>
+  <nav>
+    <a href="support.html">サポート</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="terms.html">利用規約</a>
+  </nav>
+  <p>© 2026 PINLOG</p>
 </footer>
-
-
 </body>
 </html>
