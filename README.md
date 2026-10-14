@@ -25,9 +25,10 @@ PINLOG の公開ページ。アプリへ送るトップ（紹介ページ）・�
 | `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ4枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る |
 | `support.html` | サポート（よくある質問・お問い合わせ）。**App Store Connect のサポート URL はここ** |
 | `privacy.html` / `terms.html` | プライバシーポリシー・利用規約 |
+| `tokushoho.html` | 特定商取引法に基づく表記（プレミアム → thaumazain/closed_map#912）。アプリの設定・加入画面と、規約の 9 からリンクされる。**正本は closed_map の `docs/legal/tokushoho.md`**。氏名・住所・電話は「請求があれば遅滞なく開示」 |
 | `img/` | トップの画像。`screen-*.webp` は App Store に出しているスクショ（600×1300）、`qr-app-store.svg` は `https://apps.apple.com/app/id6801804300` の QR、`icon-192.png` はアプリのアイコン |
 | `index.html` / `privacy.html` / `terms.html` | 既存のサポートページ |
-| `tests/` | 招待ページのボタンの並びと行き先のテスト。`node --test tests/*.test.mjs`（パッケージは要らない） |
+| `tests/` | 招待ページのボタンの並びと行き先・法務のページ（特商法の項目・規約の有料サービスの条・リンク）のテスト。`node --test tests/*.test.mjs`（パッケージは要らない） |
 
 > ⚠️ 招待ページを**1つのボタンで「アプリがあれば開く・無ければ App Store」にはできない。**
 > Web ページからはアプリが入っているかを確かめられない（理由は `invite/index.html` 冒頭）。
