@@ -46,8 +46,19 @@ test('規約・ポリシー・サポート・トップのどこからでも、�
   }
 });
 
-test('最終更新日は 3 ページとも 2026年10月13日（課金の記載を入れた日）', () => {
-  for (const html of [tokushoho, terms, privacy]) {
-    assert.match(html, /最終更新日：2026年10月13日/);
-  }
+test('最終更新日: 特商法とプライバシーポリシーは 2026年10月13日、利用規約は 2026年10月16日（逃げ道を固めた日 → thaumazain/closed_map#1154）', () => {
+  assert.match(tokushoho, /最終更新日：2026年10月13日/);
+  assert.match(privacy, /最終更新日：2026年10月13日/);
+  assert.match(terms, /最終更新日：2026年10月16日/);
+});
+
+test('利用規約の逃げ道: 有料サービスの終了・賠償の上限・規約の変更・利用停止・データ（消したら落ちる → thaumazain/closed_map#1154）', () => {
+  assert.match(terms, /終了日の30日以上前に本アプリ内または本ページで通知し、新規の加入と自動更新を停止したうえで、支払い済みの期間が終わるまで有料サービスを提供します/);
+  assert.match(terms, /有料サービスの変更・終了については 9\. の定めがこの条に優先します/);
+  assert.match(terms, /当方の軽過失により利用者に損害が生じた場合/);
+  assert.match(terms, /当方の故意または重大な過失による損害については、前項の上限は適用しません/);
+  assert.doesNotMatch(terms, /法令上の責任を超えて責任を負いません/);
+  assert.match(terms, /民法第548条の4/);
+  assert.match(terms, /支払い済みの料金は返金しません（法令に定める場合を除きます）/);
+  assert.match(terms, /データを保存し、または利用者に引き渡す義務を負いません/);
 });
