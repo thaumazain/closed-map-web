@@ -46,9 +46,9 @@ test('規約・ポリシー・サポート・トップのどこからでも、�
   }
 });
 
-test('最終更新日: 特商法とプライバシーポリシーは 2026年10月13日、利用規約は 2026年10月16日（逃げ道を固めた日 → thaumazain/closed_map#1154）', () => {
+test('最終更新日: 特商法は 2026年10月13日、利用規約とプライバシーポリシーは 2026年10月16日（thaumazain/closed_map#1154・#1155）', () => {
   assert.match(tokushoho, /最終更新日：2026年10月13日/);
-  assert.match(privacy, /最終更新日：2026年10月13日/);
+  assert.match(privacy, /最終更新日：2026年10月16日/);
   assert.match(terms, /最終更新日：2026年10月16日/);
 });
 
@@ -61,4 +61,11 @@ test('利用規約の逃げ道: 有料サービスの終了・賠償の上限・
   assert.match(terms, /民法第548条の4/);
   assert.match(terms, /支払い済みの料金は返金しません（法令に定める場合を除きます）/);
   assert.match(terms, /データを保存し、または利用者に引き渡す義務を負いません/);
+});
+
+test('プライバシーポリシーに外部送信（電気通信事業法27条の12）の節があり、Expo を送信先に書く（消したら落ちる → thaumazain/closed_map#1155）', () => {
+  assert.match(privacy, /外部送信について（電気通信事業法第27条の12）/);
+  assert.match(privacy, /<strong>650 Industries, Inc\.（Expo）<\/strong>/);
+  assert.match(privacy, /プッシュトークン/);
+  assert.match(privacy, /Apple Inc\.（App Store）へ送信します/);
 });
