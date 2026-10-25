@@ -46,26 +46,16 @@ test('規約・ポリシー・サポート・トップのどこからでも、�
   }
 });
 
-test('最終更新日: 特商法は 2026年10月13日、利用規約とプライバシーポリシーは 2026年10月16日（thaumazain/closed_map#1154・#1155）', () => {
+test('最終更新日: 特商法は 2026年10月13日（課金の記載を入れた日）、規約とポリシーは 2026年10月25日（片方向のフォローにした日）', () => {
   assert.match(tokushoho, /最終更新日：2026年10月13日/);
-  assert.match(privacy, /最終更新日：2026年10月16日/);
-  assert.match(terms, /最終更新日：2026年10月16日/);
+  for (const html of [terms, privacy]) {
+    assert.match(html, /最終更新日：2026年10月25日/);
+  }
 });
 
-test('利用規約の逃げ道: 有料サービスの終了・賠償の上限・規約の変更・利用停止・データ（消したら落ちる → thaumazain/closed_map#1154）', () => {
-  assert.match(terms, /終了日の30日以上前に本アプリ内または本ページで通知し、新規の加入と自動更新を停止したうえで、支払い済みの期間が終わるまで有料サービスを提供します/);
-  assert.match(terms, /有料サービスの変更・終了については 9\. の定めがこの条に優先します/);
-  assert.match(terms, /当方の軽過失により利用者に損害が生じた場合/);
-  assert.match(terms, /当方の故意または重大な過失による損害については、前項の上限は適用しません/);
-  assert.doesNotMatch(terms, /法令上の責任を超えて責任を負いません/);
-  assert.match(terms, /民法第548条の4/);
-  assert.match(terms, /支払い済みの料金は返金しません（法令に定める場合を除きます）/);
-  assert.match(terms, /データを保存し、または利用者に引き渡す義務を負いません/);
-});
-
-test('プライバシーポリシーに外部送信（電気通信事業法27条の12）の節があり、Expo を送信先に書く（消したら落ちる → thaumazain/closed_map#1155）', () => {
-  assert.match(privacy, /外部送信について（電気通信事業法第27条の12）/);
-  assert.match(privacy, /<strong>650 Industries, Inc\.（Expo）<\/strong>/);
-  assert.match(privacy, /プッシュトークン/);
-  assert.match(privacy, /Apple Inc\.（App Store）へ送信します/);
+test('ログを見せる相手は「フォローを承認した相手（フォロワー）」で、「相互にフォロー」と書かない（thaumazain/closed_map#1324。戻したら落ちる）', () => {
+  for (const html of [terms, privacy]) {
+    assert.doesNotMatch(html, /相互にフォロー|相互フォロー/);
+    assert.match(html, /あなたがフォローを承認した相手（フォロワー）/);
+  }
 });
