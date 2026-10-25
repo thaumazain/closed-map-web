@@ -46,8 +46,16 @@ test('規約・ポリシー・サポート・トップのどこからでも、�
   }
 });
 
-test('最終更新日は 3 ページとも 2026年10月13日（課金の記載を入れた日）', () => {
-  for (const html of [tokushoho, terms, privacy]) {
-    assert.match(html, /最終更新日：2026年10月13日/);
+test('最終更新日: 特商法は 2026年10月13日（課金の記載を入れた日）、規約とポリシーは 2026年10月25日（片方向のフォローにした日）', () => {
+  assert.match(tokushoho, /最終更新日：2026年10月13日/);
+  for (const html of [terms, privacy]) {
+    assert.match(html, /最終更新日：2026年10月25日/);
+  }
+});
+
+test('ログを見せる相手は「フォローを承認した相手（フォロワー）」で、「相互にフォロー」と書かない（thaumazain/closed_map#1324。戻したら落ちる）', () => {
+  for (const html of [terms, privacy]) {
+    assert.doesNotMatch(html, /相互にフォロー|相互フォロー/);
+    assert.match(html, /あなたがフォローを承認した相手（フォロワー）/);
   }
 });
