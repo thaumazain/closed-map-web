@@ -24,11 +24,12 @@ PINLOG の公開ページ。アプリへ送るトップ（紹介ページ）・�
 | `_redirects` | **`/invite/<id>` を招待ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
 | `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ4枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る |
 | `support.html` | サポート（よくある質問・お問い合わせ）。**App Store Connect のサポート URL はここ** |
-| `privacy.html` / `terms.html` | プライバシーポリシー・利用規約 |
+| `privacy.html` / `terms.html` | プライバシーポリシー・利用規約（日本語。**日本に住む人**に適用する正式版）。ナビから英語版へリンクする |
+| `en/privacy.html` / `en/terms.html` | 英語版のプライバシーポリシー・利用規約。**日本以外に住む人**に適用する正式版（日本語版の訳ではない）。オーストラリア（16歳以上・オーストラリア消費者法・OAIC）とアメリカ（13歳以上・州のプライバシー法・仲裁なし）の条と、App Store の EULA に要る条を持つ。準拠法は日本法・東京地裁で、住んでいる国の消費者保護は奪わない。**日本語版を変えたら、英語版にも同じ変更が要るかを見る** |
 | `tokushoho.html` | 特定商取引法に基づく表記（プレミアム → thaumazain/closed_map#912）。アプリの設定・加入画面と、規約の 9 からリンクされる。**正本は closed_map の `docs/legal/tokushoho.md`**。氏名・住所・電話は「請求があれば遅滞なく開示」 |
 | `img/` | トップの画像。`screen-*.webp` は App Store に出しているスクショ（600×1300）、`qr-app-store.svg` は `https://apps.apple.com/app/id6801804300` の QR、`icon-192.png` はアプリのアイコン |
 | `index.html` / `privacy.html` / `terms.html` | 既存のサポートページ |
-| `tests/` | 招待ページのボタンの並びと行き先・法務のページ（特商法の項目・規約の有料サービスの条・リンク）のテスト。`node --test tests/*.test.mjs`（パッケージは要らない） |
+| `tests/` | 招待ページのボタンの並びと行き先・法務のページ（特商法の項目・規約の有料サービスの条・リンク・英語版の国ごとの条）のテスト。`node --test tests/*.test.mjs`（パッケージは要らない。`node --test tests/` とフォルダで渡すと Node 22 では動かない） |
 
 > ⚠️ 招待ページを**1つのボタンで「アプリがあれば開く・無ければ App Store」にはできない。**
 > Web ページからはアプリが入っているかを確かめられない（理由は `invite/index.html` 冒頭）。
@@ -158,6 +159,14 @@ https://pinlogapp.com/terms.html
 ```
 
 `invite/index.html` はその想定で `/privacy.html` `/terms.html` を相対参照している。
+
+**英語のローカリゼーション**（English (Australia)・English (U.S.) など）の
+プライバシーポリシー URL・利用規約（EULA）には、英語版を入れる。
+
+```
+https://pinlogapp.com/en/privacy.html
+https://pinlogapp.com/en/terms.html
+```
 
 > GitHub Pages と併存させてもよいが、**Universal Links は Cloudflare 側でしか
 > 動かない**（GitHub Pages のプロジェクトページではルートに AASA を置けないため）。
