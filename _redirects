@@ -16,3 +16,7 @@
 
 # 旧 pinlog://users/<id> と同じ形も受ける（AASA の components に合わせる）
 /users/*    /invite/   200
+
+# アプリからシェアした店のリンク（thaumazain/closed_map#1605）。/places/<placeId>?ll=<緯度>,<経度>
+# アプリがあれば Universal Links で店のページが開き、ここには来ない。無い人に案内ページを返す
+/places/*   /places/   200

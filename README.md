@@ -20,8 +20,9 @@ PINLOG の公開ページ。アプリへ送るトップ（紹介ページ）・�
 |---|---|
 | `.well-known/apple-app-site-association` | Universal Links の宣言 |
 | `invite/index.html` | 招待の受け皿。上「友達のマップを見る」でアプリの招待画面を開き、下「アプリを入れてない方はこちら」で App Store へ送る |
+| `places/index.html` | アプリからシェアした店のリンク（`/places/<id>?ll=<緯度>,<経度>`）の受け皿（thaumazain/closed_map#1605）。上「PINLOG で開く」でアプリの店のページ、「Google マップで開く」で `ll` の地点、下で App Store。**店名も写真も出さず、API も呼ばない**（ADR-066） |
 | `_headers` | **AASA を `application/json` で返す**（無いと動かない） |
-| `_redirects` | **`/invite/<id>` を招待ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
+| `_redirects` | **`/invite/<id>` を招待ページ、`/places/<id>` を店の案内ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
 | `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ4枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る |
 | `support.html` | サポート（よくある質問・お問い合わせ）。**App Store Connect のサポート URL はここ** |
 | `privacy.html` / `terms.html` | プライバシーポリシー・利用規約（日本語。**日本に住む人**に適用する正式版）。ナビから英語版へリンクする |
