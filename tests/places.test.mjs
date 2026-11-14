@@ -41,6 +41,16 @@ test('「PINLOG で開く」はアプリの店のページを開く', () => {
   assert.notEqual(open.style.display, 'none');
 });
 
+test('「Google マップで開く」は q の店名＋住所で検索する（アプリと同じ検索。座標に戻ったら落ちる）', () => {
+  const q = encodeURIComponent('喫茶ことり 渋谷店 東京都渋谷区道玄坂2丁目10-7');
+  assert.equal(run(`/places/${ID}`, `?q=${q}`).map.href, `https://www.google.com/maps/search/?api=1&query=${q}`);
+});
+
+test('q はページに書かない（書き換えたリンクで PINLOG の名前のまま好きな文を見せられたら落ちる）', () => {
+  const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+  assert.doesNotMatch(script, /innerHTML|textContent|innerText|document\.write|document\.title/);
+});
+
 test('「Google マップで開く」は ll の座標で開き、読めない ll では隠す（スクリプトを差し込まれたら落ちる）', () => {
   assert.equal(run(`/places/${ID}`, '?ll=35.66312,139.73220').map.href, 'https://www.google.com/maps/search/?api=1&query=35.66312,139.73220');
   assert.equal(run(`/places/${ID}`).map.style.display, 'none');
