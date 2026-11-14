@@ -60,7 +60,7 @@
   h1 .nowrap { white-space: nowrap; }
   .lead { margin: 12px 16px 0; text-align: center; color: var(--muted); font-size: 15px; }
 
-  /* スクショ: スマホでは横に送る。PC では4枚を並べる */
+  /* スクショ: スマホでは横に送る。PC では6枚を1列に並べる（幅が足りなければ縮める） */
   .shots {
     width: 100%; margin-top: 28px; padding: 4px 16px 12px;
     display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -89,7 +89,7 @@
   @media (min-width: 900px) {
     main { padding-top: 72px; }
     .shots { justify-content: center; overflow-x: visible; }
-    .shots img { width: 210px; }
+    .shots img { width: min(14vw, 190px); }
     .hint { display: none; }
     .qr { display: block; }
   }
@@ -117,10 +117,12 @@
   </div>
 
   <div class="shots" aria-label="アプリの画面">
-    <img src="img/screen-1-map.webp" width="600" height="1300" alt="友達の“リピ確”が地図になる。招待した友達だけのクローズドな地図">
-    <img src="img/screen-2-kuchikomi.webp" width="600" height="1300" alt="“知らない口コミ”より“あの人の口コミ”" loading="lazy">
-    <img src="img/screen-3-shumi.webp" width="600" height="1300" alt="趣味嗜好が近い人がわかる" loading="lazy">
-    <img src="img/screen-4-mapapp.webp" width="600" height="1300" alt="お馴染みの地図アプリで開ける" loading="lazy">
+    <img src="img/screen-1-map.webp" width="600" height="1300" alt="その“場所”も その“瞬間”も ひとつの“地図”に。">
+    <img src="img/screen-2-cheki.webp" width="600" height="1300" alt="行った場所がかわいい“チェキ”に。" loading="lazy">
+    <img src="img/screen-3-tags.webp" width="600" height="1300" alt="おすすめの店も“豊富なタグ”ですぐ見つかる。" loading="lazy">
+    <img src="img/screen-4-hoshi5.webp" width="600" height="1300" alt="知らない人の「★5」より友達の「★5」" loading="lazy">
+    <img src="img/screen-5-calendar.webp" width="600" height="1300" alt="これまでの投稿がいつか見返したい“思い出”に。" loading="lazy">
+    <img src="img/screen-6-closing.webp" width="600" height="1300" alt="“お気に入りの場所”も“忘れたくない瞬間”も PINLOG" loading="lazy">
   </div>
   <p class="hint">← 横にスワイプ →</p>
 
