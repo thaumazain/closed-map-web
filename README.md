@@ -23,14 +23,16 @@ PINLOG の公開ページ。アプリへ送るトップ（紹介ページ）・�
 | `places/index.html` | アプリからシェアした店のリンク（`/places/<id>?q=<店名 住所>`、住所の無い店は `?ll=<緯度>,<経度>`）の受け皿（thaumazain/closed_map#1605・#1607）。上「PINLOG で開く」でアプリの店のページ、「Google マップで開く」で `q` の店名＋住所の検索（無ければ `ll` の地点）、下で App Store。**店名も写真も出さず、API も呼ばない**（ADR-066） |
 | `_headers` | **AASA を `application/json` で返す**（無いと動かない） |
 | `_redirects` | **`/invite/<id>` を招待ページ、`/places/<id>` を店の案内ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
-| `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ4枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る |
-| `support.html` | サポート（よくある質問・お問い合わせ）。**App Store Connect のサポート URL はここ** |
+| `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ6枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る。右上と下のナビから英語版へ切り替える |
+| `en/index.html` | トップの英語版（`/en/`）。日本以外の人向け（thaumazain/closed_map#1181）。英語のスクショ5枚・英語の規約とポリシーへのリンク。**日本語版を変えたら、英語版にも同じ変更が要るかを見る** |
+| `support.html` | サポート（よくある質問・お問い合わせ）。**App Store Connect のサポート URL はここ**。ナビから英語版へ切り替える |
+| `en/support.html` | サポートの英語版。お問い合わせのフォームは日本語なので、英語版はメール（support.closedmap@gmail.com）を出す |
 | `privacy.html` / `terms.html` | プライバシーポリシー・利用規約（日本語。**日本に住む人**に適用する正式版）。ナビから英語版へリンクする |
 | `en/privacy.html` / `en/terms.html` | 英語版のプライバシーポリシー・利用規約。**日本以外に住む人**に適用する正式版（日本語版の訳ではない）。オーストラリア（16歳以上・オーストラリア消費者法・OAIC）とアメリカ（13歳以上・州のプライバシー法・仲裁なし）の条と、App Store の EULA に要る条を持つ。準拠法は日本法・東京地裁で、住んでいる国の消費者保護は奪わない。**日本語版を変えたら、英語版にも同じ変更が要るかを見る** |
 | `tokushoho.html` | 特定商取引法に基づく表記（プレミアム → thaumazain/closed_map#912）。アプリの設定・加入画面と、規約の 9 からリンクされる。**正本は closed_map の `docs/legal/tokushoho.md`**。氏名・住所・電話は「請求があれば遅滞なく開示」 |
-| `img/` | トップの画像。`screen-*.webp` は App Store に出しているスクショ6枚（600×1300）、`qr-app-store.svg` は `https://apps.apple.com/app/id6801804300` の QR、`icon-192.png` はアプリのアイコン |
+| `img/` | トップの画像。`screen-*.webp` は App Store に出しているスクショ6枚、`en/screen-*.webp` は英語の App Store のスクショ5枚（どちらも 600×1300）、`qr-app-store.svg` は `https://apps.apple.com/app/id6801804300` の QR、`icon-192.png` はアプリのアイコン |
 | `index.html` / `privacy.html` / `terms.html` | 既存のサポートページ |
-| `tests/` | 招待ページのボタンの並びと行き先・法務のページ（特商法の項目・規約の有料サービスの条・リンク・英語版の国ごとの条）のテスト。`node --test tests/*.test.mjs`（パッケージは要らない。`node --test tests/` とフォルダで渡すと Node 22 では動かない） |
+| `tests/` | 招待ページのボタンの並びと行き先・法務のページ（特商法の項目・規約の有料サービスの条・リンク・英語版の国ごとの条）・トップとサポートの日本語版と英語版の切り替えのテスト。`node --test tests/*.test.mjs`（パッケージは要らない。`node --test tests/` とフォルダで渡すと Node 22 では動かない） |
 
 > ⚠️ 招待ページを**1つのボタンで「アプリがあれば開く・無ければ App Store」にはできない。**
 > Web ページからはアプリが入っているかを確かめられない（理由は `invite/index.html` 冒頭）。

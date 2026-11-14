@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PINLOG — Support</title>
+  <link rel="alternate" hreflang="ja" href="https://pinlogapp.com/support.html" />
+  <link rel="alternate" hreflang="en" href="https://pinlogapp.com/en/support.html" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #4ECDC4;
+      --teal-dark: #3ab5ac;
+      --text: #2c2c2c;
+      --muted: #666;
+      --bg: #f9f9f9;
+      --card: #ffffff;
+      --border: #e5e5e5;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: var(--teal);
+      color: white;
+      text-align: center;
+      padding: 48px 24px 40px;
+    }
+
+    header .icon {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 40px;
+    }
+
+    header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.02em; }
+    header p  { margin-top: 8px; opacity: 0.9; font-size: 0.95rem; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 24px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--teal-dark);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--teal);
+      transition: background 0.15s;
+    }
+
+    nav a:hover { background: var(--teal); color: white; }
+
+    main {
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--teal-dark);
+    }
+
+    .faq-item { margin-bottom: 20px; }
+    .faq-item h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+    .faq-item p  { font-size: 0.9rem; color: var(--muted); }
+
+    .contact-body { font-size: 0.93rem; color: var(--muted); margin-bottom: 20px; }
+
+    .btn {
+      display: inline-block;
+      background: var(--teal);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 13px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background 0.15s;
+    }
+
+    .btn:hover { background: var(--teal-dark); }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--teal-dark); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<!-- サポート（support.html）の英語版。日本以外の人向け（thaumazain/closed_map#1181）。
+     日本語版の よくある質問 を変えたら、ここも同じ変更が要るかを見る。
+     お問い合わせのフォームは日本語なので、英語版ではメールを先に出す -->
+
+<header>
+  <div class="icon">📍</div>
+  <h1>PINLOG</h1>
+  <p>A private map you share with friends</p>
+</header>
+
+<nav>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact us</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="terms.html">Terms of Service</a>
+  <a href="../support.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+
+<main>
+
+  <!-- FAQ -->
+  <div class="card" id="faq">
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <h3>Can I join without an invite?</h3>
+      <p>Anyone can download the app and sign up. There are no public maps, though: you only see someone's posts once they approve your follow request, or when you connect through their invite link.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Who can see the photos I post?</h3>
+      <p>Only people whose follow request you have approved and people you connected with through an invite link. Posts set to "Only me" (Premium) are visible to you alone.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I delete my account?</h3>
+      <p>Open Settings in the app and tap "Delete account" at the bottom. If you sign in again within 30 days, the deletion is cancelled. After 30 days, all of your data is permanently deleted. If you subscribe to Premium, deleting your account does not stop App Store billing, so please cancel your subscription first.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>An invite link won't open</h3>
+      <p>Make sure the app is installed. After installing it, tap the link again and it will open in the app.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>My photo won't upload</h3>
+      <p>Check your network connection and try again. If it still fails, please contact us below.</p>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="card" id="contact">
+    <h2>Contact us</h2>
+    <p class="contact-body">Email us at <a href="mailto:support.closedmap@gmail.com">support.closedmap@gmail.com</a>. We usually reply within 2–3 business days (Japan time).</p>
+    <a class="btn" href="mailto:support.closedmap@gmail.com">Email support</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 PINLOG &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a> &nbsp;|&nbsp; <a href="../tokushoho.html" hreflang="ja">Commercial disclosure (Japanese)</a> &nbsp;|&nbsp; <a href="../support.html" hreflang="ja" lang="ja">日本語</a></p>
+</footer>
+
+
+</body>
+</html>

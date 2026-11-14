@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PINLOG — Your friends' favourite places, all on one map</title>
+<meta name="description" content="PINLOG is a private map shared only with people you know. Your friends' favourite places add up on one map.">
+<link rel="alternate" hreflang="ja" href="https://pinlogapp.com/">
+<link rel="alternate" hreflang="en" href="https://pinlogapp.com/en/">
+
+<!--
+  pinlogapp.com/en/ — トップ（index.html）の英語版。日本以外の人向け（thaumazain/closed_map#1181）。
+  作りは日本語版と同じ。文言・スクショ・リンク先だけが英語。日本語版を変えたら、ここも同じ変更が要るかを見る。
+
+  - スクショは英語の App Store に出しているもの（img/en/screen-*.webp。600×1300）。
+    カレンダーの1枚はアプリの画面が日本語のままなので入れていない（pinlog-promo の appstore/build_en.py と同じ）
+  - 規約・ポリシー・サポートは英語版（en/）へリンクする。特定商取引法に基づく表記は日本語だけ
+-->
+
+<meta name="apple-itunes-app" content="app-id=6801804300">
+<meta property="og:title" content="PINLOG — Your friends' favourite places, all on one map">
+<meta property="og:description" content="A private map shared only with people you know. Your friends' tips, all in one place.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pinlogapp.com/en/">
+<meta property="og:image" content="https://pinlogapp.com/img/icon-192.png">
+<link rel="icon" href="../img/icon-192.png">
+<link rel="apple-touch-icon" href="../img/icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- アプリと同じ書体（本文 Noto Sans JP・ロゴ Pacifico → closed_map の mobile/constants/fonts.ts） -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+  /* 色はアプリと同じ（closed_map の mobile/constants/theme.ts） */
+  :root {
+    --bg: #FAF8F4; --surface: #FFFFFF; --text: #2C2825; --muted: #7A7068;
+    --accent: #4ECDC4; --border: #E5E0D9;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh; display: flex; flex-direction: column;
+  }
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 48px 0 24px; }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { width: 52px; height: 52px; border-radius: 12px; }
+  .brand span { font-family: 'Pacifico', cursive; font-size: 32px; color: var(--accent); line-height: 1; }
+
+  h1 {
+    margin: 28px 16px 0; text-align: center;
+    font-size: clamp(22px, 6vw, 34px); font-weight: 700; line-height: 1.5; letter-spacing: .02em;
+  }
+  h1 .nowrap { white-space: nowrap; }
+  .lead { margin: 12px 16px 0; text-align: center; color: var(--muted); font-size: 15px; }
+
+  /* スクショ: スマホでは横に送る。PC では5枚を1列に並べる（幅が足りなければ縮める） */
+  .shots {
+    width: 100%; margin-top: 28px; padding: 4px 16px 12px;
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .shots::-webkit-scrollbar { display: none; }
+  .shots img {
+    flex: 0 0 auto; width: min(62vw, 240px); aspect-ratio: 600 / 1300; height: auto;
+    border-radius: 18px; scroll-snap-align: center;
+    box-shadow: 0 10px 28px rgba(44, 40, 37, .14);
+    background: var(--surface);
+  }
+  .hint { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+
+  .get { margin-top: 24px; display: flex; align-items: center; gap: 24px; }
+  .badge img { display: block; height: 54px; width: auto; }
+  .qr { display: none; text-align: center; }
+  .qr img { display: block; width: 112px; height: 112px; border-radius: 10px; border: 1px solid var(--border); }
+  .qr p { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
+
+  /* 言語の切り替え（右上）。日本語版と英語版のトップで同じ位置に置く */
+  .lang {
+    position: absolute; top: calc(12px + env(safe-area-inset-top)); right: 16px;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px;
+    background: var(--surface); color: var(--muted); font-size: 13px; text-decoration: none;
+  }
+
+  footer { padding: 24px 16px calc(24px + env(safe-area-inset-bottom)); text-align: center; font-size: 13px; color: var(--muted); }
+  footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; }
+  footer a { color: var(--muted); }
+  footer p { margin: 10px 0 0; font-size: 12px; }
+
+  @media (min-width: 900px) {
+    main { padding-top: 72px; }
+    .shots { justify-content: center; overflow-x: visible; }
+    .shots img { width: min(14vw, 190px); }
+    .hint { display: none; }
+    .qr { display: block; }
+  }
+</style>
+</head>
+<body>
+<a class="lang" href="../" hreflang="ja" lang="ja">日本語</a>
+<main>
+  <div class="brand">
+    <img src="../img/icon-192.png" alt="" width="52" height="52">
+    <span>PINLOG</span>
+  </div>
+
+  <h1><span class="nowrap">Your friends' favourite places,</span><br><span class="nowrap">all on one map</span></h1>
+  <p class="lead">A private map shared only with people you know</p>
+
+  <div class="get">
+    <a class="badge" href="https://apps.apple.com/app/id6801804300">
+      <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store">
+    </a>
+    <div class="qr">
+      <img src="../img/qr-app-store.svg" alt="QR code that opens PINLOG on the App Store">
+      <p>Scan with your iPhone camera</p>
+    </div>
+  </div>
+
+  <div class="shots" aria-label="Screens from the app">
+    <img src="../img/en/screen-1-map.webp" width="600" height="1300" alt="Your places. Your friends' finds. All on one map!!">
+    <img src="../img/en/screen-2-moment.webp" width="600" height="1300" alt="Pin the moment. Save the place." loading="lazy">
+    <img src="../img/en/screen-3-search.webp" width="600" height="1300" alt="Find your way back to the places you've been." loading="lazy">
+    <img src="../img/en/screen-4-stars.webp" width="600" height="1300" alt="A friend's 5 stars mean more." loading="lazy">
+    <img src="../img/en/screen-5-places.webp" width="600" height="1300" alt="Make every place part of your story" loading="lazy">
+  </div>
+  <p class="hint">← Swipe →</p>
+
+</main>
+
+<footer>
+  <nav>
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="../" hreflang="ja" lang="ja">日本語</a>
+  </nav>
+  <p>© 2026 PINLOG</p>
+</footer>
+</body>
+</html>
