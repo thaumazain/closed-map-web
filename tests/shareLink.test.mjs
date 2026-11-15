@@ -16,8 +16,8 @@ function load(fakeFetch) {
   return ctx.onRequestGet;
 }
 
-const request = (ua = 'Mozilla/5.0 (iPhone) Safari') =>
-  new Request('https://pinlogapp.com/s/Ab3dE5fG7h', { headers: { 'user-agent': ua } });
+const request = (ua = 'Mozilla/5.0 (iPhone) Safari', ip = '203.0.113.7') =>
+  new Request('https://pinlogapp.com/s/Ab3dE5fG7h', { headers: { 'user-agent': ua, 'cf-connecting-ip': ip } });
 
 test('API の 302 の飛び先（案内ページ）へそのまま飛ばす。UA を渡し、リダイレクトは自分で追わない', async () => {
   const calls = [];
@@ -51,6 +51,25 @@ test('無いコード（API の 404）・API が落ちている・形の違う�
   assert.equal(called, false, '形の違うコードで API を叩かない');
 });
 
-test('IP を API に渡さない（ADR-067。数えるのは回数と日時だけ）', () => {
-  assert.doesNotMatch(src, /cf-connecting-ip|x-forwarded-for|x-real-ip/i);
+test('合言葉があるときだけ、合言葉と開いた人の IP を API に渡す（1 人ごとに連打を止めるため → ADR-067）', async () => {
+  const calls = [];
+  const onRequestGet = load(async (url, init) => { calls.push(init); return new Response(null, { status: 302, headers: { location: PLACE } }); });
+  await onRequestGet({ params: { code: 'Ab3dE5fG7h' }, request: request(), env: { PINLOG_RELAY_SECRET: 's3cret' } });
+  assert.equal(calls[0].headers['X-Pinlog-Relay'], 's3cret');
+  assert.equal(calls[0].headers['X-Pinlog-Visitor'], '203.0.113.7');
+});
+
+test('合言葉が無ければ IP を渡さない（合言葉なしで IP だけ渡しても API は使わないので、外へ出さない）', async () => {
+  const calls = [];
+  const onRequestGet = load(async (url, init) => { calls.push(init); return new Response(null, { status: 302, headers: { location: PLACE } }); });
+  await onRequestGet({ params: { code: 'Ab3dE5fG7h' }, request: request(), env: {} });
+  await onRequestGet({ params: { code: 'Ab3dE5fG7h' }, request: request() });
+  for (const init of calls) {
+    assert.equal(init.headers['X-Pinlog-Visitor'], undefined);
+    assert.equal(init.headers['X-Pinlog-Relay'], undefined);
+  }
+});
+
+test('開いた人の IP は x-forwarded-for などに載せない（決めたヘッダー以外で IP を流したら落ちる）', () => {
+  assert.doesNotMatch(src, /x-forwarded-for|x-real-ip/i);
 });
