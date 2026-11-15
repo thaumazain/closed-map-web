@@ -103,8 +103,14 @@ test('日本語版と英語版が互いにリンクする（リンクを消し�
   assert.match(nav(privacy), /<a href="terms\.html">Terms of Service<\/a>/);
 });
 
-test('最終更新日は 2026年11月2日（英語版を作った日）', () => {
-  for (const html of [terms, privacy]) {
-    assert.match(html, /Last updated: November 2, 2026/);
-  }
+test('最終更新日: 規約は 2026年11月2日（英語版を作った日）、ポリシーは 2026年11月15日（お店のシェアを足した日）', () => {
+  assert.match(terms, /Last updated: November 2, 2026/);
+  assert.match(privacy, /Last updated: November 15, 2026/);
+});
+
+test('英語版のポリシーにも、お店のシェアで集める情報・使い道・外に届く文がある（日本語版だけ直したら落ちる）', () => {
+  assert.match(privacy, /<h3>If you share a place<\/h3>/);
+  assert.match(privacy, /We do not record the IP address, device or account of the person who opens the link/);
+  assert.match(privacy, /<strong>Place shares<\/strong>: to create the shared link/);
+  assert.match(privacy, /reaches people outside the App through the app you choose/);
 });
