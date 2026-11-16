@@ -61,10 +61,12 @@ test('店名・写真を出さず、API も呼ばない（リンクを知って�
   assert.doesNotMatch(html, /fetch\(|XMLHttpRequest|api\.pinlogapp\.com/);
 });
 
-test('AASA が /places/* をアプリに渡し、_redirects が案内ページを返す（どちらかが抜けるとアプリが開かない・トップが出る）', () => {
+test('AASA は /places/* を exclude し、_redirects が案内ページを返す（アプリへ直接飛んで選べなくなったら・トップが出たら落ちる）', () => {
   const aasa = JSON.parse(read('.well-known/apple-app-site-association'));
-  const paths = aasa.applinks.details[0].components.map((c) => c['/']);
-  assert.ok(paths.includes('/places/*'));
-  assert.ok(paths.includes('/invite/*'), '招待リンクを消していない');
+  const comps = aasa.applinks.details[0].components;
+  const places = comps.filter((c) => c['/'] === '/places/*');
+  assert.equal(places.length, 1);
+  assert.equal(places[0].exclude, true);
+  assert.ok(comps.some((c) => c['/'] === '/invite/*' && !c.exclude), '招待リンクはアプリで開くまま');
   assert.match(read('_redirects'), /^\/places\/\*\s+\/places\/\s+200$/m);
 });

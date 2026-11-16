@@ -6,7 +6,7 @@
         "components": [
           { "/": "/invite/*", "comment": "招待リンク。アプリがあれば開く" },
           { "/": "/users/*",  "comment": "旧 pinlog://users/<id> と同じ形" },
-          { "/": "/places/*", "comment": "アプリからシェアした店のリンク。アプリがあれば店のページを開く" }
+          { "/": "/places/*", "exclude": true, "comment": "店のリンクはアプリがあっても案内ページを出す（PINLOG / Google マップを選ばせる）" }
         ]
       }
     ]
