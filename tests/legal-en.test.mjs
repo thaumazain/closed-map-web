@@ -103,8 +103,7 @@ test('日本語版と英語版が互いにリンクする（リンクを消し�
   assert.match(nav(privacy), /<a href="terms\.html">Terms of Service<\/a>/);
 });
 
-test('最終更新日は 2026年11月2日（英語版を作った日）', () => {
-  for (const html of [terms, privacy]) {
-    assert.match(html, /Last updated: November 2, 2026/);
-  }
+test('最終更新日: 規約は 2026年11月2日（英語版を作った日）、ポリシーは 2026年11月15日（写真の上限を6枚にした日）', () => {
+  assert.match(terms, /Last updated: November 2, 2026/);
+  assert.match(privacy, /Last updated: November 15, 2026/);
 });
