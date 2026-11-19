@@ -21,6 +21,7 @@ PINLOG の公開ページ。アプリへ送るトップ（紹介ページ）・�
 | `.well-known/apple-app-site-association` | Universal Links の宣言 |
 | `invite/index.html` | 招待の受け皿。上「友達のマップを見る」でアプリの招待画面を開き、下「アプリを入れてない方はこちら」で App Store へ送る |
 | `places/index.html` | アプリからシェアした店のリンク（`/places/<id>?q=<店名 住所>`、住所の無い店は `?ll=<緯度>,<経度>`）の受け皿（thaumazain/closed_map#1605・#1607）。上「PINLOG で開く」でアプリの店のページ、「Google マップで開く」で `q` の店名＋住所の検索（無ければ `ll` の地点）、下で App Store。**店名も写真も出さず、API も呼ばない**（ADR-066） |
+| `functions/s/[code].js` | 店のシェアの短縮リンク `/s/<code>` の中継（Cloudflare Pages Functions・thaumazain/closed_map#1622・ADR-067）。API の `GET https://api.pinlogapp.com/s/<code>` が回数を数えて返す 302 の飛び先（`/places/<id>?q=…`）をそのまま返す。飛び先が `https://pinlogapp.com/places/` 以外ならトップへ。**User-Agent は渡し、IP は渡さない**。`functions/` はリポジトリ直下に置けば Pages が自動で関数にする（ビルドは要らない） |
 | `_headers` | **AASA を `application/json` で返す**（無いと動かない） |
 | `_redirects` | **`/invite/<id>` を招待ページ、`/places/<id>` を店の案内ページに割り当てる**（効いていないと**トップページが 200 で返る**） |
 | `index.html` | トップ。アプリへ送る紹介ページ（キャッチコピー・App Store のバッジ・PC では QR・スクショ6枚 → thaumazain/closed_map#507）。Safari では Smart App Banner が出る。右上と下のナビから英語版へ切り替える |
